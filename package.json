@@ -24,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/nathanclevenger/mongo-rpc/issues"
   },
-  "homepage": "https://github.com/nathanclevenger/mongo-rpc#readme"
+  "homepage": "https://github.com/nathanclevenger/mongo-rpc#readme",
+  "devDependencies": {
+    "mongodb": "^6.1.0"
+  }
 }

@@ -1,9 +1,9 @@
-import { MongoRPCClient } from './index.js'
+import { MongoRemoteClient } from './index.js'
 
-const client = MongoRPCClient('mongodb://localhost:27017', { useUnifiedTopology: true })
+const client = MongoRemoteClient('mongodb://admin:password@cluster.xyzabc.mongodb.net:27017?retryWrites=true&w=majority&readPreference=nearest', { useUnifiedTopology: true })
 
-client.db('test').collection('test').find({}).sort({_id: -1}).limit(10).toArray()
+const findResults = await client.db('test').collection('test').find({}).sort({_id: -1}).limit(100).toArray() ?? { error: 'No results' }
+const insertResults = await client.db('test2').collection('test2').insertOne({ test: 123 })
 
-const test = client.db('anotherTest').collection('anotherTest')
+console.log({ findResults, insertResults })
 
-test.find({}).sort({_id: -1}).limit(100).toArray()
