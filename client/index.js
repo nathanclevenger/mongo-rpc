@@ -1,16 +1,27 @@
 export const MongoRemoteClient = (connectionString, options) => {
 
-  const connectionURL = new URL(connectionString)
+  let connectionURL
 
-  const { baseURL = `https://彡.sh/${connectionURL.hostname ?? 'demo'}/client`, ...opts } = options
+  try {
+    connectionURL = new URL(connectionString)
+    console.log({ connectionURL })
+  } catch (error) { }
+  
+
+  const { apiKey, baseURL = `https://彡.sh/${connectionURL?.hostname ?? 'demo'}/client`, ...opts } = options
 
 
   const sendCommand = async url => {
     console.log(url)
     const headers = { 
-      'Authorization': `Basic ${btoa(`${connectionURL.username}:${connectionURL.password}`)}`,
-      'X-Connection-Options': JSON.stringify({...Object.fromEntries(connectionURL.searchParams), ...opts}),
+      'Authorization': apiKey ?? `Basic ${btoa(`${connectionURL?.username}:${connectionURL?.password}`)}`,
+      'X-Connection-Protocol': connectionURL?.protocol,
+      'X-Connection-Hostname': connectionURL?.hostname,
+      'X-Connection-Port': connectionURL?.port,
+      'X-Connection-Pathname': connectionURL?.pathname,
+      'X-Connection-Options': connectionURL?.search,
     }
+    console.log({ headers })
     const startTime = Date.now()
     const results = await fetch(url, { headers }).then(res => res.json())
     const latency = Date.now() - startTime
