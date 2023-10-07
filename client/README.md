@@ -1,4 +1,4 @@
-# mongo-rpc: MongoDB RPC Client & Server for Edge Proxy, Caching, and Connection Pooling
+# mongo-rpc: MongoDB RPC Client for Edge Proxy, Caching, and Connection Pooling
 
 ```javascript
 import { MongoRemoteClient } from 'mongo-rpc'
