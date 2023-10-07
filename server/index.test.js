@@ -7,7 +7,9 @@ const server = MongoRemoteServer({
   }
 })
 
-await server.handle(new Request('https://彡.sh/demo/client.db("test2").collection("test2").insertOne({"test":123})'))
+const results = await server.handle(new Request('https://彡.sh/demo/client.db("test2").collection("test2").insertOne({"test":123})'))
+
+console.log({ results })
 
 server.close()
 

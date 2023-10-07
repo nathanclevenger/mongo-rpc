@@ -3,13 +3,15 @@ import JSON5 from 'json5'
 
 let clients = {}
 
-export const MongoRemoteServer = options => {
+export const MongoRemoteServer = ({
+  clusters,
+  ...options
+}) => {
 
-  const { clusters, ...opts } = options ?? {}
   if (!clusters) throw new Error('Missing clusters option')
 
   Object.entries(clusters).forEach(([ cluster, connectionString ]) => {
-    clients[cluster] = new MongoClient(connectionString, { ...opts })
+    clients[cluster] = new MongoClient(connectionString, { ...options })
     clients[cluster].connect()
   })
 
@@ -30,7 +32,7 @@ export const MongoRemoteServer = options => {
         return { method, args: args.map(arg => JSON5.parse(decodeURIComponent(arg))) }
       })
       procedureCalls[0].method = procedureCalls[0].method.replace('client.','')
-      console.log({ cluster, headers })
+      // console.log({ cluster, headers })
       console.log(procedureCalls)
 
 
@@ -38,14 +40,14 @@ export const MongoRemoteServer = options => {
 
       for (const { method, args } of procedureCalls) {
         if (!chain[method]) throw new Error(`Method ${method} not found`)
-        console.log({ method, args })
+        // console.log({ method, args })
         chain = chain[method](...args)
       }
 
       const results = await chain
 
-      console.log({ results })
-
+      // console.log({ results })
+      return results
     },
     close: async () => {
       for (const client of Object.values(clients)) {
