@@ -11,7 +11,11 @@ export const MongoRemoteServer = ({
   if (!clusters) throw new Error('Missing clusters option')
 
   Object.entries(clusters).forEach(([ cluster, connectionString ]) => {
-    clients[cluster] = new MongoClient(connectionString, { ...options })
+    
+    clients[cluster] = new MongoClient(connectionString, { ...options }, error => {
+      if (error) console.error(cluster, error)
+      console.log(`Connected to cluster ${cluster}`)
+    })
     clients[cluster].connect()
   })
 

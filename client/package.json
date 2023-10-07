@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/nathanclevenger/mongo-rpc#readme",
   "devDependencies": {
+    "dotenv": "^16.3.1",
     "mongodb": "^6.1.0"
   }
 }

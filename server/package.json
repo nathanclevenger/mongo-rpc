@@ -1,6 +1,6 @@
 {
   "name": "mongo-rpc-server",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "MongoDB RPC Server on Node, Deno, or Bun for Edge Proxy, Caching, and Connection Pooling",
   "main": "index.js",
   "type": "module",
