@@ -6,7 +6,7 @@ export const MongoRemoteClient = ({
 
   const sendCommand = async url => {
     console.log(url)
-    const headers = { 'Authorization': apiKey }
+    const headers = { 'x-api-key': apiKey }
     const startTime = Date.now()
     const results = await fetch(url, { headers }).then(res => res.json())
     const latency = Date.now() - startTime
